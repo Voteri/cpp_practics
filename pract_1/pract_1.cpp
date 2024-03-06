@@ -18,6 +18,7 @@ struct Record
 	int area;
 	unsigned short productivity;
 	struct Date date;
+	bool isEmpty;
 };
 
 
@@ -80,14 +81,16 @@ void Draw(struct Record* records) {
 	cout << "|" << endl;
 	cout.width(width + 1); cout.fill('-'); cout << "-" << endl;
 	cout.fill(' ');
-	for (int i = 0; i < 3; i++) {
-		cout << left << "|"; cout.width(14); cout << left << records[i].name;
-		cout << left << "|"; cout.width(4); cout << left << records[i].type;
-		cout << left << "|";  printWhithZero(records[i].area, 17);
-		cout << left << "|"; cout.width(20); cout << left << records[i].productivity;
-		cout << left << "|";
-		printDate(records[i].date.day, records[i].date.month, records[i].date.year, 24);
-		cout << "|" << endl;
+	for (int i = 0; i < 10; i++) {
+		if (not records[i].isEmpty) {
+			cout << left << "|"; cout.width(14); cout << left << records[i].name;
+			cout << left << "|"; cout.width(4); cout << left << records[i].type;
+			cout << left << "|";  printWhithZero(records[i].area, 17);
+			cout << left << "|"; cout.width(20); cout << left << records[i].productivity;
+			cout << left << "|";
+			printDate(records[i].date.day, records[i].date.month, records[i].date.year, 24);
+			cout << "|" << endl;
+		}
 	}
 	cout.width(width + 1); cout.fill('-'); cout << "-" << endl;
 	cout.fill(' '); cout.width(width);  cout << left << "|Примечание: возможно бесплатно получить продукт StarOffice через Internet "; cout << "|" << endl;
@@ -101,11 +104,13 @@ int main()
 
 	struct Record records[10];
 
-	records[0] = { "Соя", 'Б', 0013000, 45, {11,01,2011} };
-	records[1] = { "Чумиза", 'З', 8000, 17, {21,10,2012} };
-	records[2] = { "Рис", 'З',  0025650, 24, {21,10,2020} };
+	records[0] = { "Соя", 'Б', 0013000, 45, {11,01,2011},0 };
+	records[1] = { "Чумиза", 'З', 8000, 17, {21,10,2012},0 };
+	records[2] = { "Рис", 'З',  0025650, 24, {21,10,2020},0 };
 	Draw(records);
-	records[3] = { "Рис", 'З',  0025650, 24, {21,10,2020} };
+
+
+	records[3] = { "МАКС", 'М',  9999, 99, {31,12,2023},0 };
 
 	Draw(records);
 }
